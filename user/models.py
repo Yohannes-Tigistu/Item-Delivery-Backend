@@ -24,12 +24,15 @@ class serviceProviders(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='service_provider')
     id_front = models.ImageField(upload_to='user/id')
     id_back = models.ImageField(upload_to='user/id')
-    license_front = models.ImageField(upload_to='user/id')
-    license_back = models.ImageField(upload_to='user/id')
-    is_verified = models.BooleanField(default=False)
+    id_verified = models.BooleanField(default=False)
 
-    bank_account1 = models.CharField(max_length=255)
-    bank_account2 = models.CharField(max_length=255)
+    license_front = models.ImageField(upload_to='user/id', blank=True)
+    license_back = models.ImageField(upload_to='user/id', blank=True)
+    license_verified = models.BooleanField(default=False)
+
+    bank_account1 = models.CharField(max_length=255, blank=True)
+    bank_account2 = models.CharField(max_length=255, blank=True)
+    grand_father_name = models.CharField(max_length=255, blank=True)
 
     
     def __str__(self) -> str:
