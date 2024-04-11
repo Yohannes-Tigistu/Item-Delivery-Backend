@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
 
 
-    'core',
+    'core.apps.CoreConfig',
     'user', 
     'post',
 ]
@@ -78,6 +78,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'COERCE_DECIMAL_TO_STRING':False,
 }
 
 from datetime import timedelta
