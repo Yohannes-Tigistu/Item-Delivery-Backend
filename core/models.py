@@ -13,6 +13,11 @@ class Bank(models.Model):
         return f"{self.bank_name} - Account Number: {self.account_number}"
 
 class Order(models.Model):
+    STATUS_CHOICES = (
+        ('on_progress', 'On Progress'),
+        ('completed', 'Completed'),
+    )
+
     consumer = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='my_orders')
     service = models.ForeignKey(Service, on_delete=models.DO_NOTHING, related_name='orders')
     path = models.ManyToManyField(Path, related_name='order_path')
@@ -23,6 +28,7 @@ class Order(models.Model):
     order_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, related_name='orders')
     final_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='on_progress')
 
     def __str__(self):
         return f"Order ID: {self.order_id} - Consumer: {self.consumer} - Service: {self.service}"
@@ -52,6 +58,7 @@ class ApproveDelivery(models.Model):
     order = models.OneToOneField(Order, on_delete=models.DO_NOTHING, related_name='approved_delivery')
     provider_approve = models.BooleanField(default=False)
     consumer_approve = models.BooleanField(default=False)
+    paid = models.BooleanField(default=False)
 
     def __str__(self):
         return f"ApproveDelivery for Order ID: {self.order.order_id}"

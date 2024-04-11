@@ -35,3 +35,15 @@ def update_order_payment_completed(sender, instance, **kwargs):
 def create_approve_delivery(sender, instance, **kwargs):
     if instance.payment_completed:
         ApproveDelivery.objects.get_or_create(order=instance)
+
+
+@receiver(post_save, sender=ApproveDelivery)
+def update_order_status(sender, instance, **kwargs):
+    if instance.consumer_approve and instance.paid and instance.provider_approve:
+        order = instance.order
+        order.status = 'completed'
+        order.save()
+    else:
+        order = instance.order
+        order.status = 'on_progress'
+        order.save()
