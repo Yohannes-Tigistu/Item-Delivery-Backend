@@ -1,29 +1,30 @@
-import decimal
 from django.db import models
-from django.conf import settings
+from user.models import serviceProviders, Profile
 
-# Create your models here.
+class City(models.Model):
+    name = models.CharField(max_length=255)
 
-user_model = settings.AUTH_USER_MODEL
-
-class Post(models.Model):
-    creator = models.ForeignKey(user_model, on_delete=models.DO_NOTHING, related_name='posts')
-    content = models.TextField()
-    origin = models.CharField(max_length=256)
-    destination = models.CharField(max_length=256)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    departur_time = models.DateTimeField()
-    estimated_arrival_time = models.DateTimeField()
-    views = models.ManyToManyField(user_model, related_name='post_views')
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    customers = models.ManyToManyField(user_model, related_name="post_customers")
-
-    @property
-    def final_price(self):
-        return (self.price) * decimal(0.9)
-    
     def __str__(self):
-        return f"Post by {self.user.username} at {self.created_at}"
+        return self.name
 
+class Service(models.Model):
+    creator = models.ForeignKey(serviceProviders, on_delete=models.SET_NULL, null=True, related_name='posts')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    views = models.ManyToManyField(Profile, related_name='post_views', blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
 
+    def __str__(self):
+        return f"Post by {self.creator.profile.user.username} at {self.created_at}"
+
+class Path(models.Model):
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    origin = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, related_name='origins')
+    destination = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, related_name='destinations')
+    updated_at = models.DateTimeField(auto_now=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
+    departure_time = models.DateTimeField()  # Corrected field name
+    estimated_arrival_time = models.DateTimeField()
+
+    def __str__(self):
+        return f"Path from {self.origin.name} to {self.destination.name} for {self.service} at {self.departure_time}"
