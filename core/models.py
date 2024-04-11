@@ -18,8 +18,8 @@ class Order(models.Model):
         ('completed', 'Completed'),
     )
 
-    consumer = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='my_orders')
-    service = models.ForeignKey(Service, on_delete=models.DO_NOTHING, related_name='orders')
+    consumer = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='my_orders')
+    service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, related_name='orders')
     path = models.ManyToManyField(Path, related_name='order_path')
     created_at = models.DateTimeField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -55,7 +55,7 @@ class PaymentInvoice(models.Model):
     
 
 class ApproveDelivery(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.DO_NOTHING, related_name='approved_delivery')
+    order = models.OneToOneField(Order, on_delete=models.SET_NULL, null=True, related_name='approved_delivery')
     provider_approve = models.BooleanField(default=False)
     consumer_approve = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
