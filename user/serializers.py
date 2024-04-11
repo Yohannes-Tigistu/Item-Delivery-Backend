@@ -8,14 +8,14 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(many=False, read_only=True)
     class Meta:
         model = Profile
         fields = '__all__'
 
 
 class ServiceProviderSeralizer(serializers.ModelSerializer):
-    profile = ProfileSerializer
+    creator = ProfileSerializer(many=False, read_only=True)
     class Meta:
-        model =serviceProviders
+        model = serviceProviders
         fields = '__all__'

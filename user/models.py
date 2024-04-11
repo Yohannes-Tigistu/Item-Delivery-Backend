@@ -24,13 +24,10 @@ class Profile(models.Model):
 
 class serviceProviders(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='service_provider')
-    id_front = models.ImageField(upload_to='user/id')
-    id_back = models.ImageField(upload_to='user/id')
+    id_front = models.FileField(upload_to='user/id', blank=True)
+    id_back = models.FileField(upload_to='user/id', blank=True)
+    fayda_number = models.CharField(max_length=255, null=True, blank=True)
     id_verified = models.BooleanField(default=False)
-
-    license_front = models.ImageField(upload_to='user/id', blank=True)
-    license_back = models.ImageField(upload_to='user/id', blank=True)
-    license_verified = models.BooleanField(default=False)
 
     bank_account1 = models.CharField(max_length=255, blank=True)
     bank_account2 = models.CharField(max_length=255, blank=True)
