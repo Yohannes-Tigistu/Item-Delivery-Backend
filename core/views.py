@@ -48,7 +48,7 @@ class PaymentInvoiceViewSet(mixins.ListModelMixin,mixins.RetrieveModelMixin, mix
         return super().destroy(request, *args, **kwargs)
     
     
-class ApproveDeliveryViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+class ApproveDeliveryViewSet(mixins.ListModelMixin,mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
     queryset = ApproveDelivery.objects.all()
     serializer_class = ApproveDeliverySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

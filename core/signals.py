@@ -1,6 +1,6 @@
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
-from .models import Order, PaymentInvoice
+from .models import *
 
 @receiver(pre_save, sender=Order)
 def update_invoice(sender, instance, **kwargs):
@@ -29,3 +29,9 @@ def update_order_payment_completed(sender, instance, **kwargs):
             order = instance.order
             order.payment_completed = True
             order.save()
+
+
+@receiver(post_save, sender=Order)
+def create_approve_delivery(sender, instance, **kwargs):
+    if instance.payment_completed:
+        ApproveDelivery.objects.get_or_create(order=instance)

@@ -25,8 +25,12 @@ class PaymentInvoiceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+from rest_framework import serializers
+from .models import *
+
 class ApproveDeliverySerializer(serializers.ModelSerializer):
     order = OrderSerializer(many=False, read_only=True)
+    
     class Meta:
         model = ApproveDelivery
-        feilds = '__all__'
+        fields = '__all__'
