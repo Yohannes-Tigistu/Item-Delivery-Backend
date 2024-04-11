@@ -1,4 +1,5 @@
 import uuid
+from decimal import Decimal
 from django.db import models
 
 from user.models import Profile
@@ -21,10 +22,21 @@ class Order(models.Model):
     payment_completed = models.BooleanField(default=False)
     order_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, related_name='orders')
+    final_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
         return f"Order ID: {self.order_id} - Consumer: {self.consumer} - Service: {self.service}"
-    
+
+    def save(self, *args, **kwargs):
+        if self.total_price:
+            self.final_price = self.total_price - (Decimal(0.1) * self.total_price)
+        super().save(*args, **kwargs)
+
+    def update(self, *args, **kwargs):
+        if self.total_price:
+            self.final_price = self.total_price - (Decimal(0.1) * self.total_price)
+        super().update(*args, **kwargs)
+
 
 class PaymentInvoice(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='payment_invoice')

@@ -7,12 +7,13 @@ class BankAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['order_id', 'consumer', 'service', 'created_at', 'total_price', 'approved']
-    list_filter = ['created_at', 'approved']
-    search_fields = ['order_id', 'consumer__username']
+    list_display = ['order_id', 'consumer', 'service', 'total_price', 'approved', 'payment_completed']
+    list_filter = ['approved', 'payment_completed']
+    search_fields = ['order_id', 'consumer__username', 'service__content']
+    readonly_fields = ['final_price']
 
 @admin.register(PaymentInvoice)
 class PaymentInvoiceAdmin(admin.ModelAdmin):
-    list_display = ['order', 'payment_date', 'transaction_id', 'is_paid']
-    list_filter = ['payment_date', 'is_paid']
+    list_display = ['order', 'payment_date', 'is_paid']
+    list_filter = ['is_paid']
     search_fields = ['order__order_id']
