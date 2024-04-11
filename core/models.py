@@ -46,3 +46,12 @@ class PaymentInvoice(models.Model):
 
     def __str__(self):
         return f"Invoice for Order ID: {self.order.order_id} - Payment Date: {self.payment_date}"
+    
+
+class ApproveDelivery(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.DO_NOTHING, related_name='approved_delivery')
+    provider_approve = models.BooleanField(default=False)
+    consumer_approve = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"ApproveDelivery for Order ID: {self.order.order_id}"

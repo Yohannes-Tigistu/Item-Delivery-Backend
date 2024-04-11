@@ -6,5 +6,6 @@ router = DefaultRouter()
 router.register(r'banks', BankViewSet, basename='bank')
 router.register(r'orders', OrderViewSet, basename='order')
 router.register(r'payment-invoices', PaymentInvoiceViewSet, basename='invoice')
+router.register(r'approve-delivery', ApproveDeliveryViewSet, basename='approve')
 
 urlpatterns = router.urls

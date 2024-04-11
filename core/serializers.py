@@ -23,3 +23,10 @@ class PaymentInvoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaymentInvoice
         fields = '__all__'
+
+
+class ApproveDeliverySerializer(serializers.ModelSerializer):
+    order = OrderSerializer(many=False, read_only=True)
+    class Meta:
+        model = ApproveDelivery
+        feilds = '__all__'
