@@ -2,7 +2,7 @@ import uuid
 from decimal import Decimal
 from django.db import models
 
-from user.models import Profile
+from user.models import Profile, serviceProviders
 from post.models import Service, Path
 
 class Bank(models.Model):
@@ -62,3 +62,11 @@ class ApproveDelivery(models.Model):
 
     def __str__(self):
         return f"ApproveDelivery for Order ID: {self.order.order_id}"
+    
+
+class Rating(models.Model):
+    provider = models.ForeignKey(serviceProviders, on_delete=models.CASCADE, related_name='ratings', null=True)
+    consumer = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='ratings', null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='ratings')
+    rating = models.PositiveIntegerField()
+    description = models.TextField(blank=True)

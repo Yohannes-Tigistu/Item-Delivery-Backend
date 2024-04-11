@@ -15,15 +15,15 @@ class Service(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     views = models.ManyToManyField(Profile, related_name='post_views', blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    customers = models.ManyToManyField(Profile, related_name="post_customers", blank=True)
+
     
     def __str__(self):
         return f"Post by {self.creator.profile.user.username} at {self.created_at}"
 
 class Path(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    origin = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
-    destination = models.CharField(max_length=256)
+    origin = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, related_name='origins')
+    destination = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, related_name='destinations')
     updated_at = models.DateTimeField(auto_now=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
     departur_time = models.DateTimeField()
