@@ -1,37 +1,30 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "asgi.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/asgi.py"
-    }
-  ],
-  "env": {
-    "DJANGO_SETTINGS_MODULE": "backend.settings",
-    "PYTHONUNBUFFERED": "1"
-  },
-  "functions": {
-    "api": {
-      "runtime": "vercel.python",
-      "memory": 1024,
-      "includeFiles": "asgi.py, requirements.txt",
-      "env": {
-        "DJANGO_SETTINGS_MODULE": "backend.settings"
-      }
-    }
-  },
-  "build": {
-    "env": {
-      "DJANGO_SETTINGS_MODULE": "backend.settings"
-    }
-  },
-  "routes": [],
-  "rewrites": [],
-  "redirects": []
+    "version" : 2,
+    "builds":[
+        {
+            "src":"backend/wsgi.py",
+            "use":"@vercel/python",
+            "config":{
+                "maxLambdaSize":"15mb",
+                "runtime":"Python3.9"
+            }
+        },
+        {
+            "src": "build.sh",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "staticfiles_build"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest":"/static/$1"
+        },
+        {
+            "src":"/(.*)",
+            "dest":"backend/wsgi.py"
+        }
+    ]
 }
