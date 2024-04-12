@@ -1,18 +1,16 @@
-#!/usr/bin/env python
-
-import os
+#!/bin/bash
 
 # Install Pipenv if not already installed
-os.system("pip install pipenv")
+/usr/bin/python3 -m pip install pipenv
 
 # Create a virtual environment and install dependencies
-os.system("pipenv install --deploy --ignore-pipfile")
+/usr/bin/python3 -m pipenv install --deploy --ignore-pipfile
 
 # Activate the virtual environment
-os.system("pipenv shell")
+source $(/usr/bin/python3 -m pipenv --venv)/bin/activate
 
 # Run Django collectstatic (if needed)
-os.system("python manage.py collectstatic --no-input")
+python manage.py collectstatic --no-input
 
 # Deactivate the virtual environment
-os.system("exit")
+deactivate
