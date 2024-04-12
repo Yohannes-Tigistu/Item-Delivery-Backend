@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-&qk89jmc#9vdjo2+&9r2$6au9yf_tbzpyu+n%rvd!hoq!tdz=r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'user', 
     'post',
+    'drf_yasg',
 ]
 
 AUTH_USER_MODEL = 'user.User'
@@ -169,7 +170,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

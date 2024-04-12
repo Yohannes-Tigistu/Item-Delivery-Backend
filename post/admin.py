@@ -9,7 +9,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(Path)
 class PathAdmin(admin.ModelAdmin):
-    list_display = ['id', 'service', 'origin', 'destination', 'updated_at', 'price', 'departur_time', 'estimated_arrival_time']
+    list_display = ['id', 'service', 'origin', 'destination', 'updated_at', 'price', 'departure_time', 'estimated_arrival_time']
     list_filter = ['updated_at']
     search_fields = ['service__creator__profile__user__username', 'origin', 'destination']
     
