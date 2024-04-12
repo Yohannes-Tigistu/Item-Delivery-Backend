@@ -13,13 +13,22 @@
     }
   ],
   "env": {
-    "DJANGO_SETTINGS_MODULE": "backend.settings",
+    "DJANGO_SETTINGS_MODULE": "your_project_name.settings",
     "PYTHONUNBUFFERED": "1"
   },
   "build": {
     "env": {
-      "DJANGO_SETTINGS_MODULE": "backend.settings"
-    },
-    "postinstall": "pip install -r requirements.txt"
+      "DJANGO_SETTINGS_MODULE": "your_project_name.settings"
+    }
+  },
+  "functions": {
+    "api": {
+      "runtime": "vercel.python",
+      "memory": 1024,
+      "includeFiles": "asgi.py, requirements.txt"
+    }
+  },
+  "hooks": {
+    "postinstall": "pip install -r api/requirements.txt"
   }
 }
