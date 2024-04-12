@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# Specify Python version
-PYTHON_VERSION="python3.9"
+# Activate virtual environment if present
+if [ -d "/vercel/path0/.venv" ]; then
+    source /vercel/path0/.venv/bin/activate
+fi
 
 # Install dependencies
-${PYTHON_VERSION} -m pip install -r requirements.txt
+pip install -r requirements.txt
 
 # Collect static files
-${PYTHON_VERSION} manage.py collectstatic
+python manage.py collectstatic --no-input
