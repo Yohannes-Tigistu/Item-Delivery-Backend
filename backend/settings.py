@@ -37,7 +37,7 @@ INSTALLED_APPS = [
 
 
     'core.apps.CoreConfig',
-    'user', 
+    'user.apps.UserConfig', 
     'post',
     'drf_yasg',
 ]
