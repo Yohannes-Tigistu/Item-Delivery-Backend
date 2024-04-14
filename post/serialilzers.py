@@ -9,6 +9,12 @@ class ServiceSerializer(serializers.ModelSerializer):
         model = Service
         fields = '__all__'
 
+class ServiceListSerializer(serializers.ModelSerializer):
+    creator = ServiceProviderSeralizer(many=False, read_only=True)
+    class Meta:
+        model = Service
+        fields = '__all__'
+
 class PathSerializer(serializers.ModelSerializer):
     class Meta:
         model = Path
