@@ -13,6 +13,10 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
 
+class ProfileCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
 
 class ServiceProviderSeralizer(serializers.ModelSerializer):
     creator = ProfileSerializer(many=False, read_only=True)

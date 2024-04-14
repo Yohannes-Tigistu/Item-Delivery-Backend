@@ -10,9 +10,13 @@ class IsProfileOwner(permissions.BasePermission):
 
 class ProfileViewSet(mixins.CreateModelMixin ,mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
     queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
     lookup_field = 'user_id'
     permission_classes = [IsProfileOwner, permissions.IsAuthenticatedOrReadOnly] 
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return ProfileCreateSerializer
+        return ProfileSerializer
 
     def get_object(self):
         user_id = self.kwargs.get('user_id')  
