@@ -18,7 +18,7 @@ class Service(models.Model):
         return f"Post by {self.creator.profile.user.username} at {self.created_at}"
 
 class Path(models.Model):
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name='paths')
     origin = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, related_name='origins')
     destination = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, related_name='destinations')
     updated_at = models.DateTimeField(auto_now=True)
