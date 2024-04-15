@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'djoser',
     'corsheaders',
     'phonenumber_field',
+    'django_filters',
 
 
     'core.apps.CoreConfig',
