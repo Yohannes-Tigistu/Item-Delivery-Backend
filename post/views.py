@@ -19,6 +19,11 @@ class ServiceViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
     permission_classes = [IsServiceProvider,permissions.IsAuthenticatedOrReadOnly]
 
+    def get_serializer_class(self):
+        if self.action == "create":
+            return ServiceSerializer
+        return ServiceListSerializer
+
 
 class PathViewSet(viewsets.ModelViewSet):
     serializer_class = PathSerializer
